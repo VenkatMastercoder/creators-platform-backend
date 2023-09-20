@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import express, { Express, Application, Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 
-const app: Application = express();
+const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 5001;
 const prisma = new PrismaClient();
 
@@ -22,7 +22,20 @@ async function getAllUsers() {
 async function getoneUsers(idd: string) {
   try {
     const users = await prisma.user.findUnique({
-      where: { id: idd },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        bio: true,
+        emailVerified: true,
+        image: true,
+        socialMediaLinks: true,
+        // Explicitly exclude the fields you don't want
+        hashedPassword: false,
+        createdAt: false,
+        updatedAt: false,
+      }, where: { id: idd },
     });
     return users;
   } catch (error) {
@@ -31,21 +44,21 @@ async function getoneUsers(idd: string) {
   }
 }
 
-app.use("/api/user",async (req: Request, res: Response) => {
+app.get("/api/user", async (req: Request, res: Response) => {
   const data = await getAllUsers();
   res.status(200).json({ data });
 });
 
-app.get("/api/user/:id",async (req: Request, res: Response) => {
+app.get("/api/user/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const data = await getoneUsers(id);
   res.status(200).json({ data });
 });
 
 
-app.get('/',async (req: Request, res: Response) => {
+app.get('/', async (req: Request, res: Response) => {
   res.send('This From Backend');
-} );
+});
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
