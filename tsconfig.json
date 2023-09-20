@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2019", // Node.js 12 and above supports ES2019 fully
+    "module": "CommonJS", // Node.js uses CommonJS
+    "strict": true, 
+    "esModuleInterop": true, 
+    "moduleResolution": "node", // Node.js module resolution strategy
+    "outDir": "dist",
+    "skipLibCheck": true, 
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true, 
+    "types": ["node"], // Global type definitions for Node.js
+    "experimentalDecorators": true, // If you use decorators
+    "emitDecoratorMetadata": true // If you use decorators with reflection
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
