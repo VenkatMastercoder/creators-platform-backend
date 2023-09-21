@@ -51,7 +51,7 @@ export async function updateUsers(id: string, email: string, name: string, bio: 
         username: username
       }
     });
-    return { success: false, data:users };
+    return { success: true, data:users };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
       const target = error.meta?.target as string[] | undefined;
