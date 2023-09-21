@@ -25,8 +25,7 @@ export const userAllController = async (req: Request, res: Response) => {
 export const userIdUpdateController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { email, name, bio, image, socialMediaLinks, username } = req.body as {
-      email: string;
+    const { name, bio, image, socialMediaLinks, username } = req.body as {
       name: string;
       bio: string;
       image: string;
@@ -34,7 +33,7 @@ export const userIdUpdateController = async (req: Request, res: Response) => {
       username: string;
     };
 
-    const data = await userService.updateUsers(id, email, name, bio, image, socialMediaLinks, username);
+    const data = await userService.updateUsers(id, name, bio, image, socialMediaLinks, username);
 
     if (data.success) {
       res.status(200).send("Data has been updated successfully.");

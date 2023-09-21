@@ -36,14 +36,13 @@ export async function getoneUsers(id: string) {
   }
 }
 
-export async function updateUsers(id: string, email: string, name: string, bio: string, image: string, socialMediaLinks: string, username: string) {
+export async function updateUsers(id: string, name: string, bio: string, image: string, socialMediaLinks: string, username: string) {
   try {
     const users = await prisma.user.update({
       where: {
         id: id
       },
       data: {
-        email: email,
         name: name,
         bio: bio,
         image: image,
