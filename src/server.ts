@@ -7,6 +7,7 @@ const PORT: number = Number(process.env.PORT) || 5003;
 import userRouter from "./routes/userRouter";
 
 app.use(cors());
+app.use(express.json());
 
 app.use("/api/user",userRouter);
 
