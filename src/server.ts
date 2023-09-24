@@ -2,6 +2,7 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import userRouter from "./routes/userRouter";
 import fileRouter from "./routes/fileRouter";
+import productsRouter from "./routes/prodRouter";
 import { handleMulterError } from './middleware/ErrorHandler';
 
 const app: Express = express();
@@ -12,7 +13,7 @@ app.use(express.json());
 
 app.use("/api/v1/users",userRouter);
 app.use("/api/v1/file",fileRouter);
-app.use("/api/v1/digital_download",);
+app.use("/api/v1/digital_download",productsRouter);
 
 app.use(handleMulterError);
 
