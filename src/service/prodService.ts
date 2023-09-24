@@ -10,3 +10,17 @@ export async function getAllDigitalProducts() {
     throw error;
   }
 }
+
+export async function deleteDigitalProduct(id: number) {
+  try {
+    const prod = await prisma.digitProducts.delete({
+      where: {
+        id: id,
+      },
+    });
+    return prod;
+  } catch (error) {
+    console.error("Error deleting prod:", error);
+    throw error;
+  }
+}

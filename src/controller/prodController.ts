@@ -11,3 +11,16 @@ export const getAllDigitProdController = async (req: Request, res: Response) => 
     }
 
 }
+
+export const deleteProdController = async (req: Request, res: Response) => {
+
+    try {
+        const { id } = req.body as { id: number };
+
+        const response = await prodService.deleteDigitalProduct(id);
+
+        res.status(200).json({ message: "Product deleted successfully", response })
+    } catch(error) {
+        res.status(500).send("Internal Server Error")
+    }  
+}
