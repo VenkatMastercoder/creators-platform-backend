@@ -6,7 +6,8 @@ const fileFilter = (req: express.Request, file: Express.Multer.File, callback: m
     if (file.mimetype.split("/")[1] == "pdf") {
         callback(null, true);
     } else {
-        callback(null, false);
+        const error = new multer.MulterError('LIMIT_UNEXPECTED_FILE');
+        callback(error);
     }
 };
 
