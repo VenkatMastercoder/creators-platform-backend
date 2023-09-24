@@ -9,8 +9,9 @@ const PORT: number = Number(process.env.PORT) || 5003;
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/user",userRouter);
-app.use("/api/file",fileRouter);
+app.use("/api/v1/users",userRouter);
+app.use("/api/v1/file",fileRouter);
+app.use("/api/v1/digital_download",);
 
 app.get('/', async (req: Request, res: Response) => {
   res.send('This From Backend');

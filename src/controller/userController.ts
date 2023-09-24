@@ -36,12 +36,12 @@ export const userIdUpdateController = async (req: Request, res: Response) => {
     const data = await userService.updateUsers(id, name, bio, image, socialMediaLinks, username);
 
     if (data.success) {
-      res.status(200).json({message:"Sucess"});
+      res.status(200).json({ message: "Success" });
     } else {
       if (data.message === "Email is already in use." || data.message === "Username is already taken.") {
-        res.status(400).json({message:data.message});
+        res.status(400).json({ message: data.message });
       } else {
-        res.status(500).json({message:data.message});
+        res.status(500).json({ message: data.message });
       }
     }
   }

@@ -5,7 +5,7 @@ const router: Router = express.Router();
 
 import { userAllController, userIdController, userIdUpdateController } from "../controller/userController"
 
-router.get("/all",userAllController);
+router.get("/get_user",userAllController);
 
 router.get("/:id", userIdController);
 

@@ -20,7 +20,8 @@ model User {
   socialMediaLinks String?
   username         String          @unique
   emailVerified    Boolean         @default(false)
-  ActivateToken    ActivateToken[]
+  activateTokens   ActivateToken[] 
+  buyers           Buyer[]
 }
 
 model ActivateToken {
@@ -33,8 +34,45 @@ model ActivateToken {
   user        User      @relation(fields: [userId], references: [id])
 }
 
-model DigitNotes {
-  id      String @id @default(cuid())
-  name    String
-  content String
+model DigitProducts {
+  id              Int          @id @default(autoincrement())
+  productImgLink  String       @db.VarChar(255)
+  heading         String       @db.VarChar(255)
+  subheading      String       @db.VarChar(255)
+  downloadable    Boolean
+  pricing         Int
+  buttonTitle     String       @db.VarChar(255)
+  attachments     Attachment[]
+  stats           Stat[]
+  buyers          Buyer[]
+}
+
+model Attachment {
+  id                    Int    @id @default(autoincrement())
+  fileUrl               String @db.VarChar(2048)
+  fileKey               String @db.VarChar(255)
+  redirectUrl           String @db.VarChar(2048)
+  redirectUrlPlaceholder String @db.VarChar(255)
+  productId             Int
+  product               DigitProducts @relation(fields: [productId], references: [id])
+}
+
+model Stat {
+  id         Int     @id @default(autoincrement())
+  clicks     Int
+  purchases  Int
+  productId  Int
+  product    DigitProducts @relation(fields: [productId], references: [id])
+}
+
+model Buyer {
+  id           Int    @id @default(autoincrement())
+  influencerId String
+  influencer   User   @relation(fields: [influencerId], references: [id])
+  productId    Int
+  product      DigitProducts @relation(fields: [productId], references: [id])
+  name         String  @db.VarChar(255)
+  email        String  @db.VarChar(255)
+  purchaseDate DateTime
+  price        Int
 }
