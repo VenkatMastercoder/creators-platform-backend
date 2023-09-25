@@ -5,7 +5,7 @@
     "strict": true, 
     "esModuleInterop": true, 
     "moduleResolution": "node", // Node.js module resolution strategy
-    "outDir": "dist",
+    "outDir": "./dist",
     "skipLibCheck": true, 
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true, 
