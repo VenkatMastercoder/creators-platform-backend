@@ -12,15 +12,17 @@ model User {
   id               String          @id @default(cuid())
   email            String          @unique
   name             String
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
   bio              String?
-  image            String?
-  hashedPassword   String
-  socialMediaLinks String?
-  username         String          @unique
+  createdAt        DateTime        @default(now())
   emailVerified    Boolean         @default(false)
-  ActivateToken    ActivateToken[]
+  hashedPassword   String
+  image            String?
+  socialMediaLinks String?
+  updatedAt        DateTime        @updatedAt
+  username         String          @unique
+  activateTokens   ActivateToken[]
+  Buyer            Buyer[]
+  DigitProducts    DigitProducts[]
 }
 
 model ActivateToken {
@@ -33,8 +35,46 @@ model ActivateToken {
   user        User      @relation(fields: [userId], references: [id])
 }
 
-model DigitNotes {
-  id      String @id @default(cuid())
-  name    String
-  content String
+model DigitProducts {
+  id             Int          @id @default(autoincrement())
+  productImgLink String       @db.VarChar(255)
+  heading        String       @db.VarChar(255)
+  subheading     String       @db.VarChar(255)
+  downloadable   Boolean?
+  pricing        Int
+  buttonTitle    String       @db.VarChar(255)
+  userId         String
+  attachments    Attachment[]
+  buyers         Buyer[]
+  User           User         @relation(fields: [userId], references: [id])
+  stats          Stat[]
+}
+
+model Attachment {
+  id                     Int           @id @default(autoincrement())
+  fileUrl                String        @db.VarChar(2048)
+  fileKey                String        @db.VarChar(255)
+  redirectUrl            String        @db.VarChar(2048)
+  redirectUrlPlaceholder String        @db.VarChar(255)
+  productId              Int
+  product                DigitProducts @relation(fields: [productId], references: [id])
+}
+
+model Stat {
+  id        Int           @id @default(autoincrement())
+  clicks    Int
+  purchases Int
+  productId Int
+  product   DigitProducts @relation(fields: [productId], references: [id])
+}
+
+model Buyer {
+  id           Int           @id @default(autoincrement())
+  productId    Int
+  name         String        @db.VarChar(255)
+  email        String        @db.VarChar(255)
+  purchaseDate DateTime      @default(now())
+  userId       String
+  product      DigitProducts @relation(fields: [productId], references: [id])
+  User         User          @relation(fields: [userId], references: [id])
 }
