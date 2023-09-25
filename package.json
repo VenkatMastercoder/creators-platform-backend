@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node --max-old-space-size=1024 dist/server.js",
-    "bulid":"tsc",
+    "start": "tsc && node --max-old-space-size=1024 dist/server.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
