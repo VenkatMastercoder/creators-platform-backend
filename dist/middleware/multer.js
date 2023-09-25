@@ -13,5 +13,5 @@ const fileFilter = (req, file, callback) => {
         callback(error);
     }
 };
-const upload = (0, multer_1.default)({ fileFilter, limits: { fileSize: 1000, files: 1 } });
+const upload = (0, multer_1.default)({ fileFilter, limits: { fileSize: 100000000, files: 1 } });
 exports.default = upload;
