@@ -10,6 +10,6 @@ const fileFilter = (req: express.Request, file: Express.Multer.File, callback: m
     }
 };
 
-const upload = multer({ fileFilter, limits: { fileSize: 10000000000, files: 1 } });
+const upload = multer({ fileFilter, limits: { fileSize: 1000, files: 1 } });
 
 export default upload;

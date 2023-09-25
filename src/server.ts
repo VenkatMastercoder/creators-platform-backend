@@ -9,6 +9,7 @@ const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 5003;
 
 app.use(cors());
+
 app.use(express.json());
 
 app.use("/api/v1/users",userRouter);
@@ -23,4 +24,4 @@ app.get('/', async (req: Request, res: Response) => {
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
-});
+}); 

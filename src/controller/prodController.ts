@@ -17,7 +17,7 @@ export const postDigitProdController = async (req: Request, res: Response) => {
 
     try {
         const post = await prodService.postDigitalProducts(productData);
-        res.status(200).json({ message: "Post Data Successfully" })
+        res.status(200).json({ message: "Post Data Successfully", post })
     }
     catch (error) {
         res.send(500).json({ error: 'Error Posting Digit Product' })
