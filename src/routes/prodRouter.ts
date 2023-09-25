@@ -1,12 +1,14 @@
 import express, { Router } from "express";
-import { deleteProdController, getAllDigitProdController, updateProdController } from "../controller/prodController";
+import { deleteDigitProdController, getAllDigitProdController, postDigitProdController, updateDigitProdController } from "../controller/prodController";
 
 const router: Router = express.Router();
 
 router.get("/", getAllDigitProdController);
 
-router.delete("/:id", deleteProdController);
+router.post("/add", postDigitProdController);
 
-router.patch("/:id", updateProdController);
+router.delete("/:id", deleteDigitProdController);
+
+router.put("/:id", updateDigitProdController);
 
 export default router;
