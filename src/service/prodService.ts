@@ -31,7 +31,8 @@ export async function postDigitalProducts(productData: IProductData) {
         subheading: productData.subheading,
         pricing: productData.pricing,
         buttonTitle: productData.buttonTitle,
-        userId: user.id
+        downloadable: productData.downloadable,
+        userId: user.id,
       }
     });
     return prod;
