@@ -2,9 +2,9 @@
   "name": "creators-platform-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.js",  
   "scripts": {
-    "start": "tsc && node --max-old-space-size=1024 dist/server.js",
+    "start": "npm run build && npm prune --omit=dev",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
