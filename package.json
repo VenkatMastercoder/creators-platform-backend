@@ -2,9 +2,10 @@
   "name": "creators-platform-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "server.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "node --max-old-space-size=1024 dist/server.js",
+    "bulid":"tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
