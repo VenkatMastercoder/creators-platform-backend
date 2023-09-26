@@ -11,6 +11,17 @@ export const getAllDigitProdController = async (req: Request, res: Response) => 
     }
 }
 
+export const getId = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        console.log("ID:", id);
+        const data = await prodService.getProductById(Number(id));
+        res.status(200).json({ data: data });
+    } catch (error) {
+        res.status(500).json({ error: 'Error Getting Digit Product' });
+    }
+}
+
 export const postDigitProdController = async (req: Request, res: Response) => {
 
     const productData = req.body as IProductData

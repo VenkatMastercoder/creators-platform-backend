@@ -12,6 +12,15 @@ export async function getAllDigitalProducts() {
   }
 }
 
+export async function getProductById(productId: number) {
+  const product = await prisma.digitProducts.findUnique({
+    where: {
+      id: productId
+    }
+  })
+  return product;
+}
+
 export async function postDigitalProducts(productData: IProductData) {
   try {
     const user = await prisma.user.findUnique({
@@ -31,7 +40,7 @@ export async function postDigitalProducts(productData: IProductData) {
         subheading: productData.subheading,
         pricing: productData.pricing,
         buttonTitle: productData.buttonTitle,
-        description:productData.description,
+        description: productData.description,
         userId: user.id,
         attachments: {
           create: [
@@ -45,13 +54,32 @@ export async function postDigitalProducts(productData: IProductData) {
     return prod;
   } catch (error) {
     console.error("Error creating product:", error);
-    throw error;
+    return error;
   }
 }
 
 
 export async function deleteDigitalProduct(id: number) {
   try {
+
+    await prisma.attachment.deleteMany({
+      where: {
+        productId: id
+      }
+    });
+
+    await prisma.buyer.deleteMany({
+      where: {
+        productId: id
+      }
+    });
+
+    await prisma.stat.deleteMany({
+      where: {
+        productId: id
+      }
+    });
+
     const prod = await prisma.digitProducts.delete({
       where: {
         id: id,
