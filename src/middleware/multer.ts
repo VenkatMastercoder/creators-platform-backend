@@ -2,7 +2,10 @@ import multer from 'multer';
 import express from 'express';
 
 const fileFilter = (req: express.Request, file: Express.Multer.File, callback: multer.FileFilterCallback) => {
-    if (file.mimetype.split("/")[1] == "pdf") {
+
+    const allowedExt = ["pdf", "zip"]
+
+    if (allowedExt.includes(file.mimetype.split('/')[1])) {
         callback(null, true);
     } else {
         const error = new multer.MulterError('LIMIT_UNEXPECTED_FILE');
