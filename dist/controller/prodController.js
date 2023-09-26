@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateDigitProdController = exports.deleteDigitProdController = exports.postDigitProdController = exports.getAllDigitProdController = void 0;
+exports.updateDigitProdController = exports.deleteDigitProdController = exports.postDigitProdController = exports.getId = exports.getAllDigitProdController = void 0;
 const prodService = __importStar(require("../service/prodService"));
 const getAllDigitProdController = async (req, res) => {
     try {
@@ -35,6 +35,17 @@ const getAllDigitProdController = async (req, res) => {
     }
 };
 exports.getAllDigitProdController = getAllDigitProdController;
+const getId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await prodService.getProductById(Number(id));
+        res.status(200).json({ data: data });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Error Getting Digit Product' });
+    }
+};
+exports.getId = getId;
 const postDigitProdController = async (req, res) => {
     const productData = req.body;
     try {

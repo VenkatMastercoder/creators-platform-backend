@@ -3,7 +3,8 @@ import { deleteDigitProdController, getAllDigitProdController, postDigitProdCont
 
 const router: Router = express.Router();
 
-// router.get("/user", getAllDigitProdController);
+router.get("/", getAllDigitProdController);
+
 router.get("/:id", getId);
 
 router.post("/add", postDigitProdController);
