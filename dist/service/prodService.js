@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateDigitProduct = exports.deleteDigitalProduct = exports.postDigitalProducts = exports.getAllDigitalProducts = void 0;
+exports.updateDigitProduct = exports.deleteDigitalProduct = exports.postDigitalProducts = exports.getProductById = exports.getAllDigitalProducts = void 0;
 const prismaClient_1 = __importDefault(require("../utils/prismaClient"));
 async function getAllDigitalProducts() {
     try {
@@ -16,6 +16,20 @@ async function getAllDigitalProducts() {
     }
 }
 exports.getAllDigitalProducts = getAllDigitalProducts;
+async function getProductById(productId) {
+    try {
+        const product = await prismaClient_1.default.digitProducts.findUnique({
+            where: {
+                id: productId
+            }
+        });
+        return product;
+    }
+    catch (error) {
+        return error;
+    }
+}
+exports.getProductById = getProductById;
 async function postDigitalProducts(productData) {
     try {
         const user = await prismaClient_1.default.user.findUnique({
@@ -48,12 +62,27 @@ async function postDigitalProducts(productData) {
     }
     catch (error) {
         console.error("Error creating product:", error);
-        throw error;
+        return error;
     }
 }
 exports.postDigitalProducts = postDigitalProducts;
 async function deleteDigitalProduct(id) {
     try {
+        await prismaClient_1.default.attachment.deleteMany({
+            where: {
+                productId: id
+            }
+        });
+        await prismaClient_1.default.buyer.deleteMany({
+            where: {
+                productId: id
+            }
+        });
+        await prismaClient_1.default.stat.deleteMany({
+            where: {
+                productId: id
+            }
+        });
         const prod = await prismaClient_1.default.digitProducts.delete({
             where: {
                 id: id,

@@ -13,12 +13,17 @@ export async function getAllDigitalProducts() {
 }
 
 export async function getProductById(productId: number) {
-  const product = await prisma.digitProducts.findUnique({
-    where: {
-      id: productId
-    }
-  })
-  return product;
+  try {
+    const product = await prisma.digitProducts.findUnique({
+      where: {
+        id: productId
+      }
+    })
+    return product
+  }
+  catch (error) {
+    return error
+  }
 }
 
 export async function postDigitalProducts(productData: IProductData) {

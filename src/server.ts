@@ -6,7 +6,7 @@ import productsRouter from "./routes/prodRouter";
 import { handleMulterError } from './middleware/ErrorHandler';
 
 const app: Express = express();
-const PORT: number = Number(process.env.PORT) || 5003;
+const PORT: number = Number(process.env.PORT) || 5005;
 
 app.use(cors());
 
