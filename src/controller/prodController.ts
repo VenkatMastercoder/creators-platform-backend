@@ -20,7 +20,7 @@ export const postDigitProdController = async (req: Request, res: Response) => {
         res.status(200).json({ message: "Post Data Successfully", post })
     }
     catch (error) {
-        res.send(500).json({ error: 'Error Posting Digit Product' })
+        res.status(500).json({ error: 'Error Posting Digit Product' })
     }
 }
 
