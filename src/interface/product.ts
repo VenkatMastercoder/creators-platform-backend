@@ -6,4 +6,6 @@ export interface IProductData {
   pricing: number;
   buttonTitle: string;
   downloadable: boolean;
+  description :string;
+  fileUrl:string;
 }
