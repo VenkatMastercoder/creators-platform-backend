@@ -44,7 +44,7 @@ model DigitProducts {
   pricing        Int
   buttonTitle    String       @db.VarChar(255)
   userId         String
-  attachments    Attachment[]
+  attachments    Attachment[] 
   buyers         Buyer[]
   User           User         @relation(fields: [userId], references: [id])
   stats          Stat[]
