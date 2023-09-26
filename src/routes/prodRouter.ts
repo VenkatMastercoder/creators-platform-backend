@@ -1,9 +1,10 @@
 import express, { Router } from "express";
-import { deleteDigitProdController, getAllDigitProdController, postDigitProdController, updateDigitProdController } from "../controller/prodController";
+import { deleteDigitProdController, getAllDigitProdController, postDigitProdController, updateDigitProdController ,getId} from "../controller/prodController";
 
 const router: Router = express.Router();
 
-router.get("/", getAllDigitProdController);
+// router.get("/user", getAllDigitProdController);
+router.get("/:id", getId);
 
 router.post("/add", postDigitProdController);
 
