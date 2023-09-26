@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUsers = exports.getoneUsers = exports.getAllUsers = void 0;
+exports.updateUsers = exports.getProducts = exports.getoneUsers = exports.getAllUsers = void 0;
 const client_1 = require("@prisma/client");
 const prismaClient_1 = __importDefault(require("../utils/prismaClient"));
 async function getAllUsers() {
@@ -43,6 +43,22 @@ async function getoneUsers(id) {
     }
 }
 exports.getoneUsers = getoneUsers;
+async function getProducts(id) {
+    try {
+        const users = await prismaClient_1.default.user.findUnique({
+            where: { id: id },
+            select: {
+                DigitProducts: true
+            }
+        });
+        return users;
+    }
+    catch (error) {
+        console.error("Error fetching user products:", error);
+        throw error;
+    }
+}
+exports.getProducts = getProducts;
 async function updateUsers(id, name, bio, image, socialMediaLinks, username) {
     var _a;
     try {

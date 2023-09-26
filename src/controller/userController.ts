@@ -22,6 +22,17 @@ export const userAllController = async (req: Request, res: Response) => {
   }
 };
 
+export const userProductsController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const data = await userService.getProducts(id);
+    res.status(200).json({ data });
+  } catch (error) {
+    console.error("Error fetching user products:", error);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 export const userIdUpdateController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
