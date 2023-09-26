@@ -31,8 +31,15 @@ export async function postDigitalProducts(productData: IProductData) {
         subheading: productData.subheading,
         pricing: productData.pricing,
         buttonTitle: productData.buttonTitle,
-        downloadable: productData.downloadable,
+        description:productData.description,
         userId: user.id,
+        attachments: {
+          create: [
+            {
+              fileUrl: productData.fileUrl,
+            },
+          ],
+        },
       }
     });
     return prod;

@@ -33,7 +33,6 @@ async function postDigitalProducts(productData) {
                 subheading: productData.subheading,
                 pricing: productData.pricing,
                 buttonTitle: productData.buttonTitle,
-                downloadable: productData.downloadable,
                 userId: user.id,
             }
         });

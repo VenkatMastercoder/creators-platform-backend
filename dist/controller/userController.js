@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userIdUpdateController = exports.userAllController = exports.userIdController = void 0;
+exports.userIdUpdateController = exports.userProductsController = exports.userAllController = exports.userIdController = void 0;
 const userService = __importStar(require("../service/userService"));
 const userIdController = async (req, res) => {
     try {
@@ -48,6 +48,18 @@ const userAllController = async (req, res) => {
     }
 };
 exports.userAllController = userAllController;
+const userProductsController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const data = await userService.getProducts(id);
+        res.status(200).json({ data });
+    }
+    catch (error) {
+        console.error("Error fetching user products:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+exports.userProductsController = userProductsController;
 const userIdUpdateController = async (req, res) => {
     try {
         const { id } = req.params;

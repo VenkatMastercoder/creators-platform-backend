@@ -40,7 +40,7 @@ model DigitProducts {
   productImgLink String       @db.VarChar(255)
   heading        String       @db.VarChar(255)
   subheading     String       @db.VarChar(255)
-  downloadable   Boolean?
+  description    String
   pricing        Int
   buttonTitle    String       @db.VarChar(255)
   userId         String
@@ -53,9 +53,9 @@ model DigitProducts {
 model Attachment {
   id                     Int           @id @default(autoincrement())
   fileUrl                String        @db.VarChar(2048)
-  fileKey                String        @db.VarChar(255)
-  redirectUrl            String        @db.VarChar(2048)
-  redirectUrlPlaceholder String        @db.VarChar(255)
+  fileKey                String?       @db.VarChar(255)
+  redirectUrl            String?       @db.VarChar(2048)
+  redirectUrlPlaceholder String?       @db.VarChar(255)
   productId              Int
   product                DigitProducts @relation(fields: [productId], references: [id])
 }

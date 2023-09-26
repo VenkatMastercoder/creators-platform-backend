@@ -36,6 +36,21 @@ export async function getoneUsers(id: string) {
   }
 }
 
+export async function getProducts(id: string) {
+  try {
+    const users = await prisma.user.findUnique({
+      where: { id: id },
+      select: {
+        DigitProducts: true
+      }
+    });
+    return users;
+  } catch (error) {
+    console.error("Error fetching user products:", error);
+    throw error;
+  }
+}
+
 export async function updateUsers(id: string, name: string, bio: string, image: string, socialMediaLinks: string, username: string) {
   try {
     const users = await prisma.user.update({
