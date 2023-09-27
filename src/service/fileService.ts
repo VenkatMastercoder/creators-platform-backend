@@ -6,12 +6,24 @@ dotenv.config();
 const s3 = new S3();
 
 export const s3Uploadv2 = async (files: Express.Multer.File[]) => {
+
+    const imageExt = ["png", "jpg", "jpeg"]
+
     const params = files.map(file => {
-        return {
-            Bucket: process.env.AWS_BUCKET_NAME || '',
-            Key: `uploads/${uuid()}-${file.originalname}`,
-            Body: file.buffer
-        };
+
+        if (imageExt.includes(file.mimetype.split('/')[1])) {
+            return {
+                Bucket: process.env.AWS_BUCKET_NAME || '',
+                Key: `images/${uuid()}-${file.originalname}`,
+                Body: file.buffer
+            };
+        } else {
+            return {
+                Bucket: process.env.AWS_BUCKET_NAME || '',
+                Key: `uploads/${uuid()}-${file.originalname}`,
+                Body: file.buffer
+            };
+        }
     });
 
     const uploadResults = await Promise.all(params.map(param => s3.upload(param).promise()));

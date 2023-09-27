@@ -10,12 +10,22 @@ const uuid_1 = require("uuid");
 dotenv_1.default.config();
 const s3 = new aws_sdk_1.S3();
 const s3Uploadv2 = async (files) => {
+    const imageExt = ["png", "jpg", "jpeg"];
     const params = files.map(file => {
-        return {
-            Bucket: process.env.AWS_BUCKET_NAME || '',
-            Key: `uploads/${(0, uuid_1.v4)()}-${file.originalname}`,
-            Body: file.buffer
-        };
+        if (imageExt.includes(file.mimetype.split('/')[1])) {
+            return {
+                Bucket: process.env.AWS_BUCKET_NAME || '',
+                Key: `images/${(0, uuid_1.v4)()}-${file.originalname}`,
+                Body: file.buffer
+            };
+        }
+        else {
+            return {
+                Bucket: process.env.AWS_BUCKET_NAME || '',
+                Key: `uploads/${(0, uuid_1.v4)()}-${file.originalname}`,
+                Body: file.buffer
+            };
+        }
     });
     const uploadResults = await Promise.all(params.map(param => s3.upload(param).promise()));
     const results = uploadResults.map((result, index) => {
