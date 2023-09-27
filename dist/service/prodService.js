@@ -23,7 +23,18 @@ async function getProductById(productId) {
                 id: productId
             }
         });
-        return product;
+        const attachment = await prismaClient_1.default.digitProducts.findUnique({
+            where: {
+                id: productId
+            },
+            select: {
+                attachments: true
+            }
+        });
+        const result = {
+            product, attachment
+        };
+        return result;
     }
     catch (error) {
         return error;
