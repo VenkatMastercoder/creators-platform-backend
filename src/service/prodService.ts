@@ -19,7 +19,21 @@ export async function getProductById(productId: number) {
         id: productId
       }
     })
-    return product
+
+    const attachment = await prisma.digitProducts.findUnique({
+      where: {
+        id: productId
+      },
+      select: {
+        attachments: true
+      }
+    })
+
+    const result = {
+      product, attachment
+    }
+
+    return result
   }
   catch (error) {
     return error
