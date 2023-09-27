@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const multer_1 = __importDefault(require("multer"));
 const fileFilter = (req, file, callback) => {
-    const allowedExt = ["pdf", "zip"];
+    const allowedExt = ["pdf", "zip", "png", "jpg", "jpeg"];
     if (allowedExt.includes(file.mimetype.split('/')[1])) {
         callback(null, true);
     }
