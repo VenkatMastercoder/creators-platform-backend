@@ -3,7 +3,7 @@ import express from 'express';
 
 const fileFilter = (req: express.Request, file: Express.Multer.File, callback: multer.FileFilterCallback) => {
 
-    const allowedExt = ["pdf", "zip"]
+    const allowedExt = ["pdf", "zip", "png", "jpg", "jpeg"]
 
     if (allowedExt.includes(file.mimetype.split('/')[1])) {
         callback(null, true);
