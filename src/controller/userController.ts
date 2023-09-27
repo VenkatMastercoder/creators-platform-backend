@@ -12,6 +12,19 @@ export const userIdController = async (req: Request, res: Response) => {
   }
 };
 
+export const userUserNameController = async (req: Request, res: Response) => {
+  try {
+    const { username } = req.params as { username: string };
+    const data = await userService.getoneUsersWithUserName(username);
+    res.status(200).json({ data });
+  } catch (error) {
+    console.error("Error fetching specific user data:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
+
 export const userAllController = async (req: Request, res: Response) => {
   try {
     const data = await userService.getAllUsers();

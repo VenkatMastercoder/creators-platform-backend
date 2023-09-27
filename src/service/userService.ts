@@ -36,6 +36,31 @@ export async function getoneUsers(id: string) {
   }
 }
 
+export async function getoneUsersWithUserName(username: string) {
+  try {
+    const users = await prisma.user.findUnique({
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        email: true,
+        bio: true,
+        emailVerified: true,
+        image: true,
+        socialMediaLinks: true,
+        // Explicitly exclude the fields you don't want
+        hashedPassword: false,
+        createdAt: false,
+        updatedAt: false,
+      }, where: { username:username },
+    });
+    return users;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+}
+
 export async function getProducts(id: string) {
   try {
     const users = await prisma.user.findUnique({

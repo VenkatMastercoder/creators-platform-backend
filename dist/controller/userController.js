@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userIdUpdateController = exports.userProductsController = exports.userAllController = exports.userIdController = void 0;
+exports.userIdUpdateController = exports.userProductsController = exports.userAllController = exports.userUserNameController = exports.userIdController = void 0;
 const userService = __importStar(require("../service/userService"));
 const userIdController = async (req, res) => {
     try {
@@ -37,6 +37,18 @@ const userIdController = async (req, res) => {
     }
 };
 exports.userIdController = userIdController;
+const userUserNameController = async (req, res) => {
+    try {
+        const { username } = req.params;
+        const data = await userService.getoneUsersWithUserName(username);
+        res.status(200).json({ data });
+    }
+    catch (error) {
+        console.error("Error fetching specific user data:", error);
+        res.status(500).send("Internal Server Error");
+    }
+};
+exports.userUserNameController = userUserNameController;
 const userAllController = async (req, res) => {
     try {
         const data = await userService.getAllUsers();

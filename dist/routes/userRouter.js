@@ -8,6 +8,7 @@ const userController_1 = require("../controller/userController");
 const router = express_1.default.Router();
 router.get("/get_user", userController_1.userAllController);
 router.get("/:id", userController_1.userIdController);
+router.get("/username/:username", userController_1.userUserNameController);
 router.get("/:id/products", userController_1.userProductsController);
 router.put("/:id", userController_1.userIdUpdateController);
 exports.default = router;
