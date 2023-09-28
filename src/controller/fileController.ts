@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { s3Uploadv2, s3Delete } from "../service/fileService";
 
-
 export const fileUploadController = async (req: Request, res: Response) => {
     try {
         const results = await s3Uploadv2(req.files as Express.Multer.File[]);

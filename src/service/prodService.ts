@@ -77,7 +77,6 @@ export async function postDigitalProducts(productData: IProductData) {
   }
 }
 
-
 export async function deleteDigitalProduct(id: number) {
   try {
 
@@ -111,11 +110,31 @@ export async function deleteDigitalProduct(id: number) {
   }
 }
 
-export async function updateDigitProduct(id: number, data: Partial<DigitProducts>) {
+export async function updateDigitProduct(id: number, data: IProductData) {
+  const { fileUrl,...productData } = data;
+
   try {
-    const response = await prisma.digitProducts.update({ where: { id }, data });
-    return response;
+    const updatedProduct = await prisma.digitProducts.update({
+      where: { id },
+      data: productData,
+    });
+
+    if (data.fileUrl) {
+      const attachment = await prisma.attachment.findFirst({
+        where: { productId: id },
+      });
+
+      if (attachment) {
+        await prisma.attachment.update({
+          where: { id: attachment.id },
+          data: { fileUrl: data.fileUrl },
+        });
+      }
+    }
+
+    return updatedProduct;
   } catch (error) {
+    console.log(error)
     throw new Error('Error updating Digital Product');
   }
 }
