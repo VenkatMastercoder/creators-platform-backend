@@ -10,28 +10,40 @@ const uuid_1 = require("uuid");
 dotenv_1.default.config();
 const s3 = new aws_sdk_1.S3();
 const s3Uploadv2 = async (files) => {
-    const imageExt = ["png", "jpg", "jpeg"];
-    const params = files.map(file => {
-        if (imageExt.includes(file.mimetype.split('/')[1])) {
+    if (!process.env.AWS_BUCKET_NAME) {
+        throw new Error('AWS_BUCKET_NAME is not set.');
+    }
+    const uploads = files.map(async (file) => {
+        const key = `uploads/${(0, uuid_1.v4)()}-${file.originalname}`;
+        if (!process.env.AWS_BUCKET_NAME) {
             return {
-                Bucket: process.env.AWS_BUCKET_NAME || '',
-                Key: `images/${(0, uuid_1.v4)()}-${file.originalname}`,
-                Body: file.buffer
+                key: key,
+                originalname: file.originalname,
+                error: 'AWS_BUCKET_NAME is not set.'
             };
         }
-        else {
+        const params = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: key,
+            Body: file.buffer
+        };
+        try {
+            const uploadResult = await s3.upload(params).promise();
             return {
-                Bucket: process.env.AWS_BUCKET_NAME || '',
-                Key: `uploads/${(0, uuid_1.v4)()}-${file.originalname}`,
-                Body: file.buffer
+                url: uploadResult.Location,
+                key: key,
+                originalname: file.originalname
+            };
+        }
+        catch (error) {
+            return {
+                key: key,
+                originalname: file.originalname,
+                error: "An unknown error occurred"
             };
         }
     });
-    const uploadResults = await Promise.all(params.map(param => s3.upload(param).promise()));
-    const results = uploadResults.map((result, index) => {
-        return { ...result, originalname: files[index].originalname };
-    });
-    return results;
+    return await Promise.all(uploads);
 };
 exports.s3Uploadv2 = s3Uploadv2;
 const s3Delete = async (fileKey) => {
@@ -43,7 +55,7 @@ const s3Delete = async (fileKey) => {
         await s3.headObject(params).promise();
         // If the headObject() call succeeds, the file exists
         const result = await s3.deleteObject(params).promise();
-        return { success: true, message: 'Object deleted successfully' };
+        return { success: true, message: 'File deleted successfully' };
     }
     catch (error) {
         return { success: false, message: error.message };
