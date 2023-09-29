@@ -3,6 +3,7 @@ import cors from 'cors';
 import userRouter from "./routes/userRouter";
 import fileRouter from "./routes/fileRouter";
 import productsRouter from "./routes/prodRouter";
+import emailRouter from "./routes/emailRouter";
 import { handleMulterError } from './middleware/ErrorHandler';
 
 const app: Express = express();
@@ -15,6 +16,7 @@ app.use(handleMulterError);
 app.use("/api/v1/users",userRouter);
 app.use("/api/v1/file",fileRouter);
 app.use("/api/v1/digital_download",productsRouter);
+app.use("/api/v1/email", emailRouter);
 
 app.get('/', async (req: Request, res: Response) => {
   res.send('This From - Creator Platform Backend');
