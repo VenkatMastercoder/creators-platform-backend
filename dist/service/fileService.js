@@ -58,7 +58,7 @@ const s3Delete = async (fileKey, id) => {
     console.log('====================================');
     try {
         await s3.headObject(params).promise();
-        // If the headObject() call succeeds, the file exists
+        // Delete the attachment from AWS S3 Bucket
         await s3.deleteObject(params).promise();
         // Delete the attachment from the database
         await prismaClient_1.default.attachment.delete({

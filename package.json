@@ -2,10 +2,10 @@
   "name": "creators-platform-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/server.js",  
+  "main": "./dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
-    "build": "tsc", 
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
