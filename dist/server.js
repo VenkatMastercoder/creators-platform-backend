@@ -8,7 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const userRouter_1 = __importDefault(require("./routes/userRouter"));
 const fileRouter_1 = __importDefault(require("./routes/fileRouter"));
 const prodRouter_1 = __importDefault(require("./routes/prodRouter"));
-const emailRouter_1 = __importDefault(require("./routes/emailRouter"));
+const checkoutRouter_1 = __importDefault(require("./routes/checkoutRouter"));
 const ErrorHandler_1 = require("./middleware/ErrorHandler");
 const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT) || 5005;
@@ -18,7 +18,7 @@ app.use(ErrorHandler_1.handleMulterError);
 app.use("/api/v1/users", userRouter_1.default);
 app.use("/api/v1/file", fileRouter_1.default);
 app.use("/api/v1/digital_download", prodRouter_1.default);
-app.use("/api/v1/email", emailRouter_1.default);
+app.use("/api/v1/checkout", checkoutRouter_1.default);
 app.get('/', async (req, res) => {
     res.send('This From - Creator Platform Backend');
 });
