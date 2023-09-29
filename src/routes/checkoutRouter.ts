@@ -1,5 +1,5 @@
 import express, {Router} from 'express';
-import { sendEmailController } from '../controller/emailController';
+import { sendEmailController } from '../controller/checkoutController';
 
 const router: Router = express.Router();
 
