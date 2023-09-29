@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-export const sendEmailService = async (email: string, productId: string) => {
+export const sendEmailService = async (name: string, email: string, productId: string) => {
 
     try {
         const attachment = await prisma.attachment.findUnique({
@@ -30,8 +30,8 @@ export const sendEmailService = async (email: string, productId: string) => {
             const info = await transporter.sendMail({
                 from: '"Tharun Balaji" <tharunbalaji31@gmail.com>', 
                 to: email, 
-                subject: "CreatorCard.io - Your purchased digital product!", 
-                html: `<div><h2>Thank you for purchasing!</h2><a href=${attachmentUrl}>Download here</a></div>`,
+                subject: "CreatorCard.io - Thank you for purachasing!", 
+                html: `<div><p>Hello ${name},</p><p>Get your purchased digital product here: <a href=${attachmentUrl}>Download here</a></p></div>`,
               });
         
             const response = { message: "Email sent successfully", attachmentUrl: attachmentUrl };
