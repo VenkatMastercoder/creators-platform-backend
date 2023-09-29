@@ -48,55 +48,33 @@ export const s3Uploadv2 = async (files: Express.Multer.File[]): Promise<{ url?: 
     return await Promise.all(uploads);
 };
 
-export const deleteFileByUrl = async (fileUrls: any, fileKeyToDelete: any) => {
-    const updatedFileUrls = fileUrls.filter((fileUrlObject: any) => {
-        return fileUrlObject.key !== fileKeyToDelete;
-    });
-    console.log("=======")
-    console.log("updated:",updatedFileUrls)
-
-    return updatedFileUrls;
-};
 
 export const s3Delete = async (fileKey: string, id: string) => {
+
     const params = {
         Bucket: process.env.AWS_BUCKET_NAME || '',
         Key: fileKey,
     };
 
+    console.log('====================================');
+    console.log("File key: "+ fileKey);
+    console.log("Attachment Id: "+ id);
+    console.log('====================================');
+
     try {
-        const fileArray = await prisma.attachment.findUnique({
-            where: { id: Number(id) },
-        });
-
-        console.log("fileArray:",fileArray)
-        console.log("=======")
-        console.log("fileKey:",fileKey)
-
-        if (!fileArray) {
-            return { success: false, message: 'Attachment not found' };
-        }
-
-        const fileUrl = fileArray.fileUrl || [];
-
-        console.log("fileUrl:",fileUrl)
-        console.log("=======")
 
         await s3.headObject(params).promise();
 
-        // If the headObject() call succeeds, the file exists
+        // Delete the attachment from AWS S3 Bucket
         await s3.deleteObject(params).promise();
 
-        const updatedFileUrls = await deleteFileByUrl(fileUrl, fileKey);
-
-        console.log("==>ANS",updatedFileUrls);
-
-        const upadatedArray = await prisma.attachment.update({
-            where: { id: Number(id) },
-            data: { fileUrl: updatedFileUrls },
+        // Delete the attachment from the database
+        await prisma.attachment.delete({
+            where: {
+                id: Number(id)
+            }
         });
-
-        console.log("UpdatedArray",upadatedArray)
+        
         return { success: true, message: 'File deleted successfully' };
     } catch (error) {
         return { success: false, message: error };
