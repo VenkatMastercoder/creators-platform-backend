@@ -20,6 +20,7 @@ model User {
   socialMediaLinks String?
   updatedAt        DateTime        @updatedAt
   username         String          @unique
+  hashtags         String?
   activateTokens   ActivateToken[]
   Buyer            Buyer[]
   DigitProducts    DigitProducts[]
