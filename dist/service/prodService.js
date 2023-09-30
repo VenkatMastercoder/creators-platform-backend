@@ -109,20 +109,32 @@ async function deleteDigitalProduct(id) {
 exports.deleteDigitalProduct = deleteDigitalProduct;
 async function updateDigitProduct(id, data) {
     const { fileUrl, ...productData } = data;
+    console.log(fileUrl);
+    console.log("::", data);
+    console.log("idd:", id);
     try {
         const updatedProduct = await prismaClient_1.default.digitProducts.update({
             where: { id },
             data: productData,
         });
-        if (data.fileUrl) {
+        if (fileUrl) {
             const attachment = await prismaClient_1.default.attachment.findFirst({
                 where: { productId: id },
             });
+            console.log("att:", attachment);
             if (attachment) {
-                await prismaClient_1.default.attachment.update({
+                const a = await prismaClient_1.default.attachment.update({
                     where: { id: attachment.id },
-                    data: { fileUrl: data.fileUrl },
+                    data: { fileUrl: fileUrl },
                 });
+                console.log("ans:", a);
+            }
+            else {
+                console.log(fileUrl);
+                const result = await prismaClient_1.default.attachment.create({
+                    data: { fileUrl: fileUrl, productId: id }
+                });
+                console.log("ansss::", result);
             }
         }
         return updatedProduct;
