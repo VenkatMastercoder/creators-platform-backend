@@ -7,8 +7,8 @@ exports.updateDigitProduct = exports.deleteDigitalProduct = exports.postDigitalP
 const prismaClient_1 = __importDefault(require("../utils/prismaClient"));
 async function getAllDigitalProducts() {
     try {
-        const prod = await prismaClient_1.default.digitProducts.findMany();
-        return prod;
+        const pro = await prismaClient_1.default.digitProducts.findMany();
+        return pro;
     }
     catch (error) {
         console.error("Error fetching prod:", error);
