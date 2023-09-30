@@ -23,6 +23,7 @@ export async function getoneUsers(id: string) {
         emailVerified: true,
         image: true,
         socialMediaLinks: true,
+        hashtags: true,
         // Explicitly exclude the fields you don't want
         hashedPassword: false,
         createdAt: false,
@@ -48,11 +49,12 @@ export async function getoneUsersWithUserName(username: string) {
         emailVerified: true,
         image: true,
         socialMediaLinks: true,
+        hashtags: true,
         // Explicitly exclude the fields you don't want
         hashedPassword: false,
         createdAt: false,
         updatedAt: false,
-      }, where: { username:username },
+      }, where: { username: username },
     });
     return users;
   } catch (error) {
@@ -76,7 +78,7 @@ export async function getProducts(id: string) {
   }
 }
 
-export async function updateUsers(id: string, name: string, bio: string, image: string, socialMediaLinks: string, username: string) {
+export async function updateUsers(id: string, name: string, bio: string, image: string, socialMediaLinks: string, username: string, hashtags: string) {
   try {
     const users = await prisma.user.update({
       where: {
@@ -87,10 +89,11 @@ export async function updateUsers(id: string, name: string, bio: string, image: 
         bio: bio,
         image: image,
         socialMediaLinks: socialMediaLinks,
+        hashtags: hashtags,
         username: username
       }
     });
-    return { success: true, data:users };
+    return { success: true, data: users };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
       const target = error.meta?.target as string[] | undefined;

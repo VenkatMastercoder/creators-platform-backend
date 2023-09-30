@@ -23,8 +23,6 @@ export const userUserNameController = async (req: Request, res: Response) => {
   }
 };
 
-
-
 export const userAllController = async (req: Request, res: Response) => {
   try {
     const data = await userService.getAllUsers();
@@ -44,33 +42,45 @@ export const userProductsController = async (req: Request, res: Response) => {
     console.error("Error fetching user products:", error);
     res.status(500).send("Internal Server Error");
   }
-}
+};
 
 export const userIdUpdateController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name, bio, image, socialMediaLinks, username } = req.body as {
-      name: string;
-      bio: string;
-      image: string;
-      socialMediaLinks: string;
-      username: string;
-    };
+    const { name, bio, image, socialMediaLinks, username, hashtags } =
+      req.body as {
+        name: string;
+        bio: string;
+        image: string;
+        socialMediaLinks: string;
+        username: string;
+        hashtags: string;
+      };
 
-    const data = await userService.updateUsers(id, name, bio, image, socialMediaLinks, username);
+    const data = await userService.updateUsers(
+      id,
+      name,
+      bio,
+      image,
+      socialMediaLinks,
+      username,
+      hashtags
+    );
 
     if (data.success) {
       res.status(200).json({ message: "Success" });
     } else {
-      if (data.message === "Email is already in use." || data.message === "Username is already taken.") {
+      if (
+        data.message === "Email is already in use." ||
+        data.message === "Username is already taken."
+      ) {
         res.status(400).json({ message: data.message });
       } else {
         res.status(500).json({ message: data.message });
       }
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error in userIdUpdateController:", error);
     res.status(500).send("Internal Server Error");
   }
-}
+};

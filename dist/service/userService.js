@@ -29,6 +29,7 @@ async function getoneUsers(id) {
                 emailVerified: true,
                 image: true,
                 socialMediaLinks: true,
+                hashtags: true,
                 // Explicitly exclude the fields you don't want
                 hashedPassword: false,
                 createdAt: false,
@@ -55,6 +56,7 @@ async function getoneUsersWithUserName(username) {
                 emailVerified: true,
                 image: true,
                 socialMediaLinks: true,
+                hashtags: true,
                 // Explicitly exclude the fields you don't want
                 hashedPassword: false,
                 createdAt: false,
@@ -85,7 +87,7 @@ async function getProducts(id) {
     }
 }
 exports.getProducts = getProducts;
-async function updateUsers(id, name, bio, image, socialMediaLinks, username) {
+async function updateUsers(id, name, bio, image, socialMediaLinks, username, hashtags) {
     var _a;
     try {
         const users = await prismaClient_1.default.user.update({
@@ -97,6 +99,7 @@ async function updateUsers(id, name, bio, image, socialMediaLinks, username) {
                 bio: bio,
                 image: image,
                 socialMediaLinks: socialMediaLinks,
+                hashtags: hashtags,
                 username: username
             }
         });
