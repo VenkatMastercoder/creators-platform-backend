@@ -4,8 +4,8 @@ import { IProductData } from "../interface/product";
 
 export async function getAllDigitalProducts() {
   try {
-    const prod = await prisma.digitProducts.findMany();
-    return prod;
+    const pro = await prisma.digitProducts.findMany();
+    return pro;
   } catch (error) {
     console.error("Error fetching prod:", error);
     throw error;
