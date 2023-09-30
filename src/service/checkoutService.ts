@@ -1,22 +1,23 @@
 import nodemailer from "nodemailer";
 import prisma from "../utils/prismaClient";
-import { Prisma } from "@prisma/client";
+import dotenv from "dotenv";
 
-const EMAIL = process.env.TEST_EMAIL;
-const PASSWORD = process.env.TEST_PASSWORD;
+// dotenv.config();
+
+// const email = process.env.TEST_EMAIL;
+// const password = process.env.TEST_PASSWORD;
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: EMAIL,
-        pass: PASSWORD,
-    }
+        user: "tharunbalaji31@gmail.com",
+        pass: "sejhkwuupxtkkwzh",
+    },
 });
 
 export const sendEmailService = async (name: string, email: string, productId: string) => {
 
     try {
-        
         const digitalProduct = await prisma.digitProducts.findUnique({
             where: {
                 id: Number(productId)
