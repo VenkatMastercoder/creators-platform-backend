@@ -1,6 +1,7 @@
 import { DigitProducts, Prisma } from "@prisma/client";
 import prisma from "../utils/prismaClient";
 import { IProductData } from "../interface/product";
+import { Result } from "postcss";
 
 export async function getAllDigitalProducts() {
   try {
@@ -111,7 +112,7 @@ export async function deleteDigitalProduct(id: number) {
 }
 
 export async function updateDigitProduct(id: number, data: IProductData) {
-  const { fileUrl,...productData } = data;
+  const { fileUrl, ...productData } = data;
 
   try {
     const updatedProduct = await prisma.digitProducts.update({
@@ -119,7 +120,7 @@ export async function updateDigitProduct(id: number, data: IProductData) {
       data: productData,
     });
 
-    if (data.fileUrl) {
+    if (fileUrl) {
       const attachment = await prisma.attachment.findFirst({
         where: { productId: id },
       });
@@ -127,7 +128,13 @@ export async function updateDigitProduct(id: number, data: IProductData) {
       if (attachment) {
         await prisma.attachment.update({
           where: { id: attachment.id },
-          data: { fileUrl: data.fileUrl },
+          data: { fileUrl: fileUrl },
+        });
+      }
+
+      else {
+        await prisma.attachment.create({
+          data: { fileUrl: fileUrl, productId: id }
         });
       }
     }

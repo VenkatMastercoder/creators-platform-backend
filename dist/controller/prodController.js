@@ -70,8 +70,8 @@ const deleteDigitProdController = async (req, res) => {
 exports.deleteDigitProdController = deleteDigitProdController;
 async function updateDigitProdController(req, res) {
     try {
-        const id = Number(req.params.id);
-        const updatedProduct = await prodService.updateDigitProduct(id, req.body);
+        const { id } = req.params;
+        const updatedProduct = await prodService.updateDigitProduct(Number(id), req.body);
         res.status(200).json({ message: 'Product updated successfully', data: updatedProduct });
     }
     catch (error) {
