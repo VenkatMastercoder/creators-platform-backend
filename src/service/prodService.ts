@@ -1,7 +1,6 @@
 import { DigitProducts, Prisma } from "@prisma/client";
 import prisma from "../utils/prismaClient";
 import { IProductData } from "../interface/product";
-import { Result } from "postcss";
 
 export async function getAllDigitalProducts() {
   try {
