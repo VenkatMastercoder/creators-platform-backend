@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import prisma from "../utils/prismaClient";
+import { Prisma } from "@prisma/client";
 
 const EMAIL = process.env.TEST_EMAIL;
 const PASSWORD = process.env.TEST_PASSWORD;
@@ -15,14 +16,20 @@ const transporter = nodemailer.createTransport({
 export const sendEmailService = async (name: string, email: string, productId: string) => {
 
     try {
-        const attachment = await prisma.attachment.findUnique({
+        
+        const digitalProduct = await prisma.digitProducts.findUnique({
             where: {
-                id: Number(productId),
+                id: Number(productId)
+            },
+            select: {
+                attachments: true
             }
         });
 
-        if (attachment != null) {
-            const parsedData = JSON.parse(attachment.fileUrl);
+        if (digitalProduct != null) {
+            const attachment = digitalProduct.attachments;
+
+            const parsedData = JSON.parse(attachment[0].fileUrl);
 
             const attachmentUrl = parsedData[0].url as string;
             console.log(attachmentUrl);
