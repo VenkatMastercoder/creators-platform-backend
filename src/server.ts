@@ -9,13 +9,15 @@ import { handleMulterError } from './middleware/ErrorHandler';
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 5005;
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.json());
 app.use(handleMulterError);
 
-app.use("/api/v1/users",userRouter);
-app.use("/api/v1/file",fileRouter);
-app.use("/api/v1/digital_download",productsRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/file", fileRouter);
+app.use("/api/v1/digital_download", productsRouter);
 app.use("/api/v1/checkout", checkoutRouter);
 
 app.get('/', async (req: Request, res: Response) => {
